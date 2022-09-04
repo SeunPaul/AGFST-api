@@ -17,22 +17,22 @@ app.use(express.urlencoded({ extended: true }));
 
 // cors
 // allow access from client
-// const whiteList = ["https://agfsalestracker.netlify.app"];
+const whiteList = ["https://agfsalestracker.netlify.app"];
 
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (whiteList.indexOf(origin) != -1) {
-//       callback(null, true);
-//     } else if (process.env.NODE_ENV !== "production") {
-//       callback(null, true);
-//     } else {
-//       console.log(origin);
-//       callback(new Error("Not allowed by cors"));
-//     }
-//   }
-// };
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whiteList.indexOf(origin) != -1) {
+      callback(null, true);
+    } else if (process.env.NODE_ENV !== "production") {
+      callback(null, true);
+    } else {
+      console.log(origin);
+      callback(new Error("Not allowed by cors"));
+    }
+  }
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // routes
 // Load routers
