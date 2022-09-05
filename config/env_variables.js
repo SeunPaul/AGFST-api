@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
 dotenv.config();
 module.exports = {
@@ -18,10 +18,10 @@ module.exports = {
   REFRESH_TOKEN: process.env.REFRESH_TOKEN,
 
   // role names
-  SUPER_ADMIN_ROLE_NAME: 'super admin',
-  USER_ROLE_NAME: 'user',
-  ADMIN_ROLE_NAME: 'admin',
+  SUPER_ADMIN_ROLE_NAME: "super admin",
+  USER_ROLE_NAME: "user",
+  ADMIN_ROLE_NAME: "admin",
 
   JWT_USER_SECRET: process.env.JWT_USER_SECRET,
+  CLIENT_URL: process.env.CLIENT_URL
 };
-

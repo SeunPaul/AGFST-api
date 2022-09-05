@@ -20,7 +20,7 @@ async function sendMail({ to, subject, html }) {
     service: "gmail",
     auth: {
       type: "OAuth2",
-      user: "seunpaul148@gmail.com",
+      user: "seopaul101@gmail.com",
       clientId: CLIENT_ID,
       clientSecret: CLIENT_SECRET,
       refreshToken: REFRESH_TOKEN,
@@ -29,7 +29,7 @@ async function sendMail({ to, subject, html }) {
   });
 
   const info2 = await transport.sendMail({
-    from: "seunpaul148@gmail.com",
+    from: "seopaul101@gmail.com",
     to,
     subject,
     html

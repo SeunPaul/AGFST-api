@@ -13,7 +13,6 @@ const {
   statusCodes,
   serverFailure
 } = require("../utils/api-response");
-// const { sendMail } = require("../services/emailSender");
 
 exports.createUser = async (req, res) => {
   try {
@@ -27,13 +26,13 @@ exports.createUser = async (req, res) => {
       return failureResponse(res, statusCodes.NOT_FOUND, "user role not found");
     }
 
-    // if (role !== USER_ROLE_NAME && req.userData.role !== SUPER_ADMIN_ROLE_NAME) {
-    //   return failureResponse(
-    //     res,
-    //     statusCodes.UNAUTHORIZED,
-    //     "you are unauthorized to create this user role"
-    //   );
-    // }
+    if (role !== USER_ROLE_NAME && req.userData.role !== SUPER_ADMIN_ROLE_NAME) {
+      return failureResponse(
+        res,
+        statusCodes.UNAUTHORIZED,
+        "you are unauthorized to create this user role"
+      );
+    }
 
     // check if user exists
     const userExists = await db("users").select().where("username", username);

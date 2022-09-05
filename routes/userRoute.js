@@ -16,7 +16,7 @@ const { checkUserToken } = require("../middlewares/checkToken");
 
 const router = express.Router();
 
-router.post("/create", createUser);
+router.post("/create", checkUserToken, checkRole, createUser);
 router.get("/users", checkUserToken, checkRole, getUsers);
 router.get("/profile", checkUserToken, getProfile);
 router.put("/edit/:userId", checkUserToken, checkRole, editUser);

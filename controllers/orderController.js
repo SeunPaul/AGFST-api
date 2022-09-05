@@ -1,12 +1,13 @@
 const db = require("../config/db");
-const { SUPER_ADMIN_ROLE_NAME } = require("../config/env_variables");
+const { SUPER_ADMIN_ROLE_NAME, CLIENT_URL } = require("../config/env_variables");
 const {
   successResponse,
   failureResponse,
   statusCodes,
   serverFailure
 } = require("../utils/api-response");
-// const { sendMail } = require("../services/emailSender");
+const { sendMail } = require("../services/emailSender");
+const { raiseOrderEmailTemplate } = require("../utils/emailTemplates");
 
 exports.createOrder = async (req, res) => {
   try {
@@ -62,7 +63,22 @@ exports.createOrder = async (req, res) => {
       created_at: new Date()
     });
 
-    return successResponse(res, statusCodes.SUCCESS, `order placed succesfully`, {});
+    sendMail({
+      to: "kesiena.ogbemi@gmail.com",
+      subject: "New Order raised",
+      html: raiseOrderEmailTemplate(uploader, `${CLIENT_URL}/admin`)
+    })
+      .then(info => {
+        console.log(info.messageId);
+        return successResponse(res, statusCodes.SUCCESS, `order placed succesfully`, {});
+      })
+      .catch(e => {
+        console.log({
+          emailErrorLog: e
+        });
+
+        return successResponse(res, statusCodes.SUCCESS, `order placed succesfully`, {});
+      });
   } catch (error) {
     console.log({ error });
     return serverFailure(res);
