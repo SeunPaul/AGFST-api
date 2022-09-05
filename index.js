@@ -38,15 +38,15 @@ app.use(cors());
 // create tables
 const createTable = async () => {
   try {
-    // const y = await db.schema.createTable("users", function (table) {
-    //   table.increments("id").notNullable();
-    //   table.string("username").notNullable();
-    //   table.string("password");
-    //   table.string("role");
-    //   table.timestamps("create_at");
-    // });
+    await db.schema.createTable("users", function (table) {
+      table.increments("id").notNullable();
+      table.string("username").notNullable();
+      table.string("password");
+      table.string("role");
+      table.timestamps("create_at");
+    });
 
-    const y = await db.schema.createTable("users", function (table) {
+    await db.schema.createTable("orders", function (table) {
       table.increments("id").notNullable();
       table.string("customer_name").notNullable();
       table.string("country");
@@ -62,8 +62,6 @@ const createTable = async () => {
       table.string("uploader");
       table.timestamps("create_at");
     });
-
-    console.log("success", y);
   } catch (error) {
     console.log("error", error);
   }
