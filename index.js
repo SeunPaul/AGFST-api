@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 //       callback(null, true);
 //     } else {
 //       console.log(origin);
-//       callback(new Error("Not allowed by cors"));
+// failureResponse(res, statusCodes.UNAUTHORIZED, "Not Allowed by Cors")
 //     }
 //   }
 // };
@@ -38,17 +38,34 @@ app.use(cors());
 // create tables
 const createTable = async () => {
   try {
+    // const y = await db.schema.createTable("users", function (table) {
+    //   table.increments("id").notNullable();
+    //   table.string("username").notNullable();
+    //   table.string("password");
+    //   table.string("role");
+    //   table.timestamps("create_at");
+    // });
+
     const y = await db.schema.createTable("users", function (table) {
       table.increments("id").notNullable();
-      table.string("username").notNullable();
-      table.string("password");
-      table.string("role");
+      table.string("customer_name").notNullable();
+      table.string("country");
+      table.string("state");
+      table.string("city");
+      table.string("address");
+      table.string("phone_number");
+      table.string("email");
+      table.string("brand");
+      table.string("production_manager");
+      table.string("sm_manager");
+      table.specificType("items", "JSONB[]");
+      table.string("uploader");
       table.timestamps("create_at");
     });
 
-    console.log(y);
+    console.log("success", y);
   } catch (error) {
-    console.log(error);
+    console.log("error", error);
   }
 };
 

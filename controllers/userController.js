@@ -23,7 +23,7 @@ exports.createUser = async (req, res) => {
       return failureResponse(res, statusCodes.BAD_REQUEST, "Invalid Payload");
     }
 
-    if (role !== USER_ROLE_NAME || role !== ADMIN_ROLE_NAME || role !== SUPER_ADMIN_ROLE_NAME) {
+    if (role !== USER_ROLE_NAME && role !== ADMIN_ROLE_NAME && role !== SUPER_ADMIN_ROLE_NAME) {
       return failureResponse(res, statusCodes.NOT_FOUND, "user role not found");
     }
 
