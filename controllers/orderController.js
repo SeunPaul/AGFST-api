@@ -66,7 +66,7 @@ exports.createOrder = async (req, res) => {
     sendMail({
       to: "kesiena.ogbemi@gmail.com",
       subject: "New Order raised",
-      html: raiseOrderEmailTemplate(uploader, `${CLIENT_URL}/admin`)
+      html: raiseOrderEmailTemplate(uploader, `${CLIENT_URL}/admin`, customer_name, city, items)
     })
       .then(info => {
         console.log(info.messageId);

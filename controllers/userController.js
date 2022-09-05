@@ -81,9 +81,12 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.getUsers = async (req, res) => {
+  const { username } = req.userData;
   try {
     if (req.userData.role === SUPER_ADMIN_ROLE_NAME) {
-      const users = await db("users").select(["id", "username", "role", "created_at"]);
+      const users = await db("users")
+        .select(["id", "username", "role", "created_at"])
+        .whereNot("username", username);
       return successResponse(res, statusCodes.SUCCESS, `user Fetched succesfully`, { users });
     }
 
@@ -202,7 +205,7 @@ exports.deleteUser = async (req, res) => {
       return failureResponse(res, statusCodes.BAD_REQUEST, "A user with this id does not exist.");
     }
 
-    if (req.userData.role !== SUPER_ADMIN_ROLE_NAME || req.userData.role !== ADMIN_ROLE_NAME) {
+    if (req.userData.role !== SUPER_ADMIN_ROLE_NAME && req.userData.role !== ADMIN_ROLE_NAME) {
       return failureResponse(res, statusCodes.UNAUTHORIZED, "you are unauthorized to delete users");
     }
 
