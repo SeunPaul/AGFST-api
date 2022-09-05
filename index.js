@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { failureResponse, statusCodes, successResponse } = require("./utils/api-response");
+const db = require("./config/db");
 
 // config dotenv
 require("dotenv").config({
@@ -17,22 +18,41 @@ app.use(express.urlencoded({ extended: true }));
 
 // cors
 // allow access from client
-const whiteList = ["https://agfsalestracker.netlify.app"];
+// const whiteList = ["https://agfsalestracker.netlify.app"];
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whiteList.indexOf(origin) != -1) {
-      callback(null, true);
-    } else if (process.env.NODE_ENV !== "production") {
-      callback(null, true);
-    } else {
-      console.log(origin);
-      callback(new Error("Not allowed by cors"));
-    }
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (whiteList.indexOf(origin) != -1) {
+//       callback(null, true);
+//     } else if (process.env.NODE_ENV !== "production") {
+//       callback(null, true);
+//     } else {
+//       console.log(origin);
+//       callback(new Error("Not allowed by cors"));
+//     }
+//   }
+// };
+
+app.use(cors());
+
+// create tables
+const createTable = async () => {
+  try {
+    const y = await db.schema.createTable("users", function (table) {
+      table.increments("id").notNullable();
+      table.string("username").notNullable();
+      table.string("password");
+      table.string("role");
+      table.timestamps("create_at");
+    });
+
+    console.log(y);
+  } catch (error) {
+    console.log(error);
   }
 };
 
-app.use(cors(corsOptions));
+createTable();
 
 // routes
 // Load routers
