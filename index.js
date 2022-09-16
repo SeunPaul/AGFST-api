@@ -27,8 +27,7 @@ const corsOptions = {
     } else if (process.env.NODE_ENV !== "production") {
       callback(null, true);
     } else {
-      console.log(origin);
-      failureResponse(res, statusCodes.UNAUTHORIZED, "Not Allowed by Cors");
+      console.log(origin, "Not Allowed by Cors");
     }
   }
 };
