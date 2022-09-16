@@ -87,7 +87,7 @@ exports.createOrder = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
   try {
-    const orders = await db("orders").select();
+    const orders = await db("orders").select().orderBy("created_at", "desc");
     return successResponse(res, statusCodes.SUCCESS, `orders Fetched succesfully`, { orders });
   } catch (error) {
     console.log({ error });
